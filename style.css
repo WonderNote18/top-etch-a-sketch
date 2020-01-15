@@ -1,0 +1,13 @@
+.sketchRow {
+    border: 1px solid blue; 
+    display: inline-block; 
+    width: 100%; 
+    height: 6.25%
+}
+
+.sketchItem {
+    display: inline-block; 
+    width: 6.25%; 
+    height: 100%;
+    margin: 0;
+}
