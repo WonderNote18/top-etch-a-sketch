@@ -13,11 +13,14 @@ function createGrid() {
 }
 
 function sketchEnter(e) {
-
+    const cell = document.getElementById(`${e.target.id}`);
+    if (cell.classList.contains("draw") == false) {cell.classList.add("draw")};
+    cell.classList.add("hover");
 }
 
 function sketchExit(e) {
-
+    const cell = document.getElementById(`${e.target.id}`);
+    cell.classList.remove("hover");
 }
 
 createGrid();
