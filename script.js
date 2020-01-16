@@ -1,8 +1,7 @@
-let containerDiv = document.querySelector("#sketchContainer");
-
 function createGrid() {
-    for (let i=0; i < 16; i++) {
+    let containerDiv = document.querySelector("#sketchContainer");
 
+    for (let i=0; i < 16; i++) {
         for (let j=0; j < 16; j++) {
             let tempDivItem = document.createElement("div");
             tempDivItem.id =  `${i+1}-${j+1}`;
