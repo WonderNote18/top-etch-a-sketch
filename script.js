@@ -1,5 +1,5 @@
 function createGrid() {
-    let containerDiv = document.querySelector("#sketchContainer");
+    const containerDiv = document.querySelector("#sketchContainer");
 
     for (let i=0; i < 16; i++) {
         for (let j=0; j < 16; j++) {
@@ -22,8 +22,21 @@ function sketchExit(e) {
     cell.classList.remove("hover");
 }
 
+function sketchClear(cell) {
+    const containerDiv = document.querySelector("#sketchContainer");
+    const childCell = document.getElementById(cell);
+    childCell.classList.remove("draw");
+}
+
+function resetSketchpad(e) {
+    sketchCells.forEach(cell => sketchClear(cell.id));
+}
+
 createGrid();
 
 const sketchCells = document.querySelectorAll('.sketchItem');
 sketchCells.forEach(cell => cell.addEventListener("mouseenter", sketchEnter));
 sketchCells.forEach(cell => cell.addEventListener("mouseleave", sketchExit));
+
+const resetButton = document.querySelector("#resetButton");
+resetButton.addEventListener("click", resetSketchpad);
