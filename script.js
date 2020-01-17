@@ -1,14 +1,19 @@
-function createGrid() {
-    const containerDiv = document.querySelector("#sketchContainer");
+function createGrid(size) {
+    let containerDiv = document.querySelector("#sketchContainer");
+    containerDiv.setAttribute('style',
+    `grid-template-rows: repeat(${size}, 1fr); grid-template-columns: repeat(${size}, 1fr)`);
 
-    for (let i=0; i < 16; i++) {
-        for (let j=0; j < 16; j++) {
+    for (let i=0; i < size; i++) {
+        for (let j=0; j < size; j++) {
             let tempDivItem = document.createElement("div");
             tempDivItem.id =  `${i+1}-${j+1}`;
             tempDivItem.className = `sketchItem`;
             containerDiv.appendChild(tempDivItem);
         }
     }
+    const sketchCells = document.querySelectorAll('.sketchItem');
+    sketchCells.forEach(cell => cell.addEventListener("mouseenter", sketchEnter));
+    sketchCells.forEach(cell => cell.addEventListener("mouseleave", sketchExit));
 }
 
 function sketchEnter(e) {
@@ -25,18 +30,25 @@ function sketchExit(e) {
 function sketchClear(cell) {
     const containerDiv = document.querySelector("#sketchContainer");
     const childCell = document.getElementById(cell);
-    childCell.classList.remove("draw");
+    containerDiv.removeChild(childCell);
 }
 
-function resetSketchpad(e) {
+function resetSketchpad() {
+    const sketchCells = document.querySelectorAll('.sketchItem');
     sketchCells.forEach(cell => sketchClear(cell.id));
+
+    let sizePrompt = prompt("How big do you want to create your sketchpad?\n(ex. 32 for a 32x32 grid)");
+
+    if (isNaN(sizePrompt)) {
+        alert(`ERROR! "${sizePrompt}" is not a number!`);
+    } else {
+        let sizeNumber = parseInt(sizePrompt);
+        if (sizeNumber < 1) {alert(`ERROR! "${sizeNumber}" is not greater than 1!`)}
+        createGrid(sizeNumber)
+    }
 }
 
-createGrid();
-
-const sketchCells = document.querySelectorAll('.sketchItem');
-sketchCells.forEach(cell => cell.addEventListener("mouseenter", sketchEnter));
-sketchCells.forEach(cell => cell.addEventListener("mouseleave", sketchExit));
+createGrid(16);
 
 const resetButton = document.querySelector("#resetButton");
 resetButton.addEventListener("click", resetSketchpad);
